@@ -43,13 +43,15 @@ class MainWindow(QtWidgets.QMainWindow):
         file_menu.addAction(open_act)
         file_menu.addAction(exit_act)
 
+
+
     def openFile(self):
         """
         Open a text or html file and display its contents in
         the text edit field.
         """
         file_name, _ = QFileDialog.getOpenFileName(self, "Open File",
-        "", "HTML Files (*.html);;Text Files (*.txt)")
+                                                   "", "HTML Files (*.html);;Text Files (*.txt)")
         if file_name:
          with open(file_name, 'r') as f:
           notepad_text = f.read()
@@ -57,6 +59,8 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
           QMessageBox.information(self, "Error",
           "Unable to open file.", QMessageBox.Ok)
+
+
 
 # Run program
 
