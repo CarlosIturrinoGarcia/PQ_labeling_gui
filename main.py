@@ -2,7 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QWidget
 
 
-class EmptyWindow(QWidget):
+class MainWindow(QWidget):
     def __init__(self):
         super().__init__() # create default constructor for QWidget
         self.initializeUI()
@@ -20,5 +20,5 @@ class EmptyWindow(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = EmptyWindow()
+    window = MainWindow()
     sys.exit(app.exec_())
