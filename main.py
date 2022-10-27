@@ -1,6 +1,7 @@
 import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QAction, QMainWindow, QFileDialog, QMessageBox
+from PyQt5.QtChart import QChart
 import scipy.io
 
 
@@ -49,7 +50,7 @@ class MainWindow(QtWidgets.QMainWindow):
         the text edit field.
         """
         file_name, _ = QFileDialog.getOpenFileName(self, "Open File",
-        "", "HTML Files (*.html);;Text Files (*.txt)")
+                                                   "", "HTML Files (*.html);;Text Files (*.txt)")
         if file_name:
          with open(file_name, 'r') as f:
           notepad_text = f.read()
@@ -57,6 +58,8 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
           QMessageBox.information(self, "Error",
           "Unable to open file.", QMessageBox.Ok)
+
+
 
 # Run program
 
