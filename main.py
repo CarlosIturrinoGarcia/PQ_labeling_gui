@@ -5,7 +5,6 @@ from PyQt5.QtChart import QChart, QChartView
 import scipy.io
 
 
-
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()  # create default constructor for QWidget
