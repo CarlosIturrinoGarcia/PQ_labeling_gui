@@ -44,7 +44,6 @@ class MainWindow(QtWidgets.QMainWindow):
         file_menu.addAction(exit_act)
 
 
-
     def openFile(self):
         """
         Open a text or html file and display its contents in
