@@ -1,7 +1,7 @@
 import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QAction, QMainWindow, QFileDialog, QMessageBox
-from PyQt5.QtChart import QChart
+from PyQt5.QtChart import QChart, QChartView
 import scipy.io
 
 
