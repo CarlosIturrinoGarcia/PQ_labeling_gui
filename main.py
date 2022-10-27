@@ -1,6 +1,7 @@
 import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QAction, QMainWindow, QFileDialog, QMessageBox
+from PyQt5.QtChart import QChart
 import scipy.io
 
 
@@ -42,7 +43,6 @@ class MainWindow(QtWidgets.QMainWindow):
         tools_menu = menu_bar.addMenu('Tools')
         file_menu.addAction(open_act)
         file_menu.addAction(exit_act)
-
 
     def openFile(self):
         """
