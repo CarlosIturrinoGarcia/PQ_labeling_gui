@@ -3,7 +3,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QAction, QMainWindow, QFileDialog, QMessageBox
 import pyqtgraph as pg
 import scipy.io
-
+import numpy as np
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -14,9 +14,17 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Initialize the window and display its contents to the screen.
         """
+        self.plot_tot = pg.PlotWidget()
+        self.plot_tot.setAspectLocked(lock=True, ratio=100)
+        widget_layout3 = QtWidgets.QVBoxLayout(self)
+        widget_layout3.addWidget(self.plot_tot)
+        self.x = np.random.normal(size=1000)
+        self.y = np.random.normal(size=1000)
         self.setGeometry(100, 100, 400, 300)
         self.setWindowTitle('Empty Window in PyQt')
         self.createMenu()
+        self._plots3 = [self.plot_tot.plot([], [], pen=pg.mkPen(color=color, width=2)) for color in ("y")]
+        self.setupPlotter(self.x)
         self.show()
 
     def createMenu(self):
@@ -59,8 +67,16 @@ class MainWindow(QtWidgets.QMainWindow):
           QMessageBox.information(self, "Error",
           "Unable to open file.", QMessageBox.Ok)
 
-    def setupPlotter(self):
+    def setupPlotter(self,data):
         self.plot_tot = pg.PlotWidget()
+        self.plot_tot.setAspectLocked(lock=True, ratio=100)
+        widget_layout_tot = QtWidgets.QHBoxLayout(self)
+        widget_layout_tot.addWidget(self.plot_tot, 87)
+        for plt, val in zip(self._plots3, data):
+            plt.setData(range(np.size(self.x)), self.x)
+        #pg.plot(self.x, self.y, pen=None, symbol='o')
+
+
 
 
 
