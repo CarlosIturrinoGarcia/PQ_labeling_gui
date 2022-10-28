@@ -59,6 +59,9 @@ class MainWindow(QtWidgets.QMainWindow):
           QMessageBox.information(self, "Error",
           "Unable to open file.", QMessageBox.Ok)
 
+    def setupPlotter(self):
+        self.plot_tot = pg.PlotWidget()
+
 
 
 # Run program
