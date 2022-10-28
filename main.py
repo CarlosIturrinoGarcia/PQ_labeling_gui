@@ -16,8 +16,6 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         self.plot_tot = pg.PlotWidget()
         self.plot_tot.setAspectLocked(lock=True, ratio=100)
-        widget_layout3 = QtWidgets.QVBoxLayout(self)
-        widget_layout3.addWidget(self.plot_tot)
         self.x = np.random.normal(size=1000)
         self.y = np.random.normal(size=1000)
         self.setGeometry(100, 100, 400, 300)
@@ -68,12 +66,12 @@ class MainWindow(QtWidgets.QMainWindow):
           "Unable to open file.", QMessageBox.Ok)
 
     def setupPlotter(self,data):
-        self.plot_tot = pg.PlotWidget()
-        self.plot_tot.setAspectLocked(lock=True, ratio=100)
+
         widget_layout_tot = QtWidgets.QHBoxLayout(self)
         widget_layout_tot.addWidget(self.plot_tot, 87)
         for plt, val in zip(self._plots3, data):
             plt.setData(range(np.size(self.x)), self.x)
+        self.setCentralWidget(self.plot_tot)
         #pg.plot(self.x, self.y, pen=None, symbol='o')
 
 
