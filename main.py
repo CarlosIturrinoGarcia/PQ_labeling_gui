@@ -16,7 +16,7 @@ class MainWindow(QtWidgets.QMainWindow):
         Initialize the window and display its contents to the screen.
         """
         self.x = np.random.normal(size=1000)
-        self.setGeometry(200, 100, 400, 300)
+        self.setGeometry(200, 100, 800, 600)
         self.setWindowTitle('Empty Window in PyQt')
         self.createMenu()
         self.setupPlotter(self.x)
