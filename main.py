@@ -1,6 +1,6 @@
 import sys
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QWidget, QAction, QMainWindow, QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QApplication, QWidget, QAction, QMainWindow, QFileDialog, QMessageBox, QVBoxLayout
 from PyQt5.QtChart import QChart, QChartView, QLineSeries, QValueAxis
 import pyqtgraph as pg
 #import scipy.io
@@ -15,14 +15,11 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Initialize the window and display its contents to the screen.
         """
-        self.plot_tot = pg.PlotWidget()
-        self.plot_tot.setAspectLocked(lock=True, ratio=100)
         self.x = np.random.normal(size=1000)
         self.y = np.random.normal(size=1000)
         self.setGeometry(100, 100, 400, 300)
         self.setWindowTitle('Empty Window in PyQt')
         self.createMenu()
-        self._plots3 = [self.plot_tot.plot([], [], pen=pg.mkPen(color=color, width=2)) for color in ("y")]
         self.setupPlotter(self.x)
         self.show()
 
@@ -67,17 +64,15 @@ class MainWindow(QtWidgets.QMainWindow):
           "Unable to open file.", QMessageBox.Ok)
 
     def setupPlotter(self,data):
-
-        widget_layout_tot = QtWidgets.QHBoxLayout(self)
-        widget_layout_tot.addWidget(self.plot_tot, 87)
-        for plt, val in zip(self._plots3, data):
-            plt.setData(range(np.size(self.x)), self.x)
-        self.setCentralWidget(self.plot_tot)
-        #pg.plot(self.x, self.y, pen=None, symbol='o')
-
-
-
-
+        t = range(0,np.size(data))
+        chart = QChart()
+        chart.setAnimationOptions(QChart.SeriesAnimations)
+        line_series = QLineSeries()
+        for value in range(0, np.size(data)):
+            line_series.append(t[value],data[value])
+        chart.addSeries(line_series)
+        self.chart_view = QChartView(chart)
+        self.setCentralWidget(self.chart_view)
 
 # Run program
 
