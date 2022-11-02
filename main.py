@@ -13,7 +13,7 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Initialize the window and display its contents to the screen.
         """
-        self.setGeometry(200, 100, 400, 300)
+        self.setGeometry(100, 100, 400, 300)
         self.setWindowTitle('Empty Window in PyQt')
         self.createMenu()
         self.show()
