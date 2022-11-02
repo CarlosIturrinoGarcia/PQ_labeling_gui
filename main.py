@@ -1,8 +1,9 @@
 import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QAction, QMainWindow, QFileDialog, QMessageBox
+from PyQt5.QtChart import QChart, QChartView, QLineSeries, QValueAxis
 import pyqtgraph as pg
-import scipy.io
+#import scipy.io
 import numpy as np
 
 class MainWindow(QtWidgets.QMainWindow):
