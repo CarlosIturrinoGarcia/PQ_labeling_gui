@@ -5,8 +5,12 @@ from PyQt5.QtChart import QChart, QChartView, QLineSeries, QValueAxis
 import pyqtgraph as pg
 import scipy.io
 import numpy as np
-import h5py
+class ChartView(QChart):
+    def __init__(self,chart):
+        super().__init__(chart)
+        self.chart = chart
 
+        self.start_pos = None
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()  # create default constructor for QWidget
@@ -16,8 +20,7 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Initialize the window and display its contents to the screen.
         """
-        self.x = np.random.normal(size=100)
-        #self.x = np.sin(np.pi / 2.)
+        self.x = np.random.normal(size=1000)
         self.setGeometry(200, 100, 800, 600)
         self.setWindowTitle('Empty Window in PyQt')
         self.createMenu()
@@ -59,7 +62,6 @@ class MainWindow(QtWidgets.QMainWindow):
         if file_name:
          if file_name[-4:] == '.mat':
             sig = scipy.io.loadmat(file_name)
-            print(sig['Data1_V1i'])
             x = sig['Data1_V1i']
             self.setupPlotter(x)
          else:
@@ -67,9 +69,8 @@ class MainWindow(QtWidgets.QMainWindow):
                  sig = f.read()
                  self.text_field.setText(sig)
         else:
-            print(file_name[-1:-3])
-            #QMessageBox.information(self, "Error",
-             # "Unable to open file.", QMessageBox.Ok)
+          QMessageBox.information(self, "Error",
+          "Unable to open file.", QMessageBox.Ok)
 
     def setupPlotter(self,data):
         t = range(0,np.size(data))
