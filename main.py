@@ -3,7 +3,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QAction, QMainWindow, QFileDialog, QMessageBox, QVBoxLayout
 from PyQt5.QtChart import QChart, QChartView, QLineSeries, QValueAxis
 import pyqtgraph as pg
-#import scipy.io
+import scipy.io as sci
 import numpy as np
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -15,7 +15,8 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Initialize the window and display its contents to the screen.
         """
-        self.x = np.random.normal(size=1000)
+        self.x = np.random.normal(size=100)
+        #self.x = np.sin(np.pi / 2.)
         self.setGeometry(200, 100, 800, 600)
         self.setWindowTitle('Empty Window in PyQt')
         self.createMenu()
@@ -56,8 +57,8 @@ class MainWindow(QtWidgets.QMainWindow):
                                                    "", "HTML Files (*.html);;Text Files (*.txt)")
         if file_name:
          with open(file_name, 'r') as f:
-          notepad_text = f.read()
-          self.text_field.setText(notepad_text)
+          sig = f.read()
+          self.text_field.setText(sig)
         else:
           QMessageBox.information(self, "Error",
           "Unable to open file.", QMessageBox.Ok)
@@ -68,7 +69,7 @@ class MainWindow(QtWidgets.QMainWindow):
         chart.setAnimationOptions(QChart.SeriesAnimations)
         line_series = QLineSeries()
         for value in range(0, np.size(data)):
-            line_series.append(t[value],data[value])
+            line_series.append(t[value],np.sin(t[value]))
         chart.addSeries(line_series)
         self.chart_view = QChartView(chart)
         self.setCentralWidget(self.chart_view)
