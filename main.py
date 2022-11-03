@@ -3,8 +3,9 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QAction, QMainWindow, QFileDialog, QMessageBox, QVBoxLayout
 from PyQt5.QtChart import QChart, QChartView, QLineSeries, QValueAxis
 import pyqtgraph as pg
-import scipy.io as sci
+import scipy.io
 import numpy as np
+import h5py
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -54,14 +55,21 @@ class MainWindow(QtWidgets.QMainWindow):
         the text edit field.
         """
         file_name, _ = QFileDialog.getOpenFileName(self, "Open File",
-                                                   "", "HTML Files (*.html);;Text Files (*.txt);;Mat Files (*.mat)")
+                                                   "", "Mat Files (*.mat);;HTML Files (*.html);;Text Files (*.txt)")
         if file_name:
-         with open(file_name, 'r') as f:
-          sig = f.read()
-          self.text_field.setText(sig)
+         if file_name[-4:] == '.mat':
+            sig = scipy.io.loadmat(file_name)
+            print(sig['Data1_V1i'])
+            x = sig['Data1_V1i']
+            self.setupPlotter(x)
+         else:
+             with open(file_name, 'r') as f:
+                 sig = f.read()
+                 self.text_field.setText(sig)
         else:
-          QMessageBox.information(self, "Error",
-          "Unable to open file.", QMessageBox.Ok)
+            print(file_name[-1:-3])
+            #QMessageBox.information(self, "Error",
+             # "Unable to open file.", QMessageBox.Ok)
 
     def setupPlotter(self,data):
         t = range(0,np.size(data))
@@ -69,7 +77,7 @@ class MainWindow(QtWidgets.QMainWindow):
         chart.setAnimationOptions(QChart.SeriesAnimations)
         line_series = QLineSeries()
         for value in range(0, np.size(data)):
-            line_series.append(t[value],np.sin(t[value]))
+            line_series.append(t[value],data[value])
         chart.addSeries(line_series)
         self.chart_view = QChartView(chart)
         self.setCentralWidget(self.chart_view)
