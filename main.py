@@ -3,8 +3,9 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QAction, QMainWindow, QFileDialog, QMessageBox, QVBoxLayout
 from PyQt5.QtChart import QChart, QChartView, QLineSeries, QValueAxis
 import pyqtgraph as pg
-#import scipy.io
+import scipy.io
 import numpy as np
+import h5py
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -15,7 +16,8 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Initialize the window and display its contents to the screen.
         """
-        self.x = np.random.normal(size=1000)
+        self.x = np.random.normal(size=100)
+        #self.x = np.sin(np.pi / 2.)
         self.setGeometry(200, 100, 800, 600)
         self.setWindowTitle('Empty Window in PyQt')
         self.createMenu()
@@ -53,14 +55,21 @@ class MainWindow(QtWidgets.QMainWindow):
         the text edit field.
         """
         file_name, _ = QFileDialog.getOpenFileName(self, "Open File",
-                                                   "", "HTML Files (*.html);;Text Files (*.txt)")
+                                                   "", "Mat Files (*.mat);;HTML Files (*.html);;Text Files (*.txt)")
         if file_name:
-         with open(file_name, 'r') as f:
-          notepad_text = f.read()
-          self.text_field.setText(notepad_text)
+         if file_name[-4:] == '.mat':
+            sig = scipy.io.loadmat(file_name)
+            print(sig['Data1_V1i'])
+            x = sig['Data1_V1i']
+            self.setupPlotter(x)
+         else:
+             with open(file_name, 'r') as f:
+                 sig = f.read()
+                 self.text_field.setText(sig)
         else:
-          QMessageBox.information(self, "Error",
-          "Unable to open file.", QMessageBox.Ok)
+            print(file_name[-1:-3])
+            #QMessageBox.information(self, "Error",
+             # "Unable to open file.", QMessageBox.Ok)
 
     def setupPlotter(self,data):
         t = range(0,np.size(data))
