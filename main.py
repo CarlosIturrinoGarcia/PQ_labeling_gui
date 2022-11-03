@@ -12,6 +12,23 @@ class ChartView(QChart):
 
         self.start_pos = None
 
+class ChartView(QChart):
+    def __init__(self,chart):
+        super().__init__(chart)
+        self.chart = chart
+        self.start_pos = None
+
+    def wheelEvent(self, event):
+        zoom_factor = 1.0
+        scale_factor = 1.10
+
+        if event.angleDelta().y() >= 120 and zoom_factor < 3.0:
+            zoom_factor *= 1.25
+            self.chart.zoom(scale_factor)
+        elif event.angleDelta().y() <= -120 and zoom_factor > 0.5:
+            zoom_factor *=0.8
+            self.chart.zoom(1/ scale_factor)
+
     def wheelEvent(self, event):
         zoom_factor = 1.0
         scale_factor = 1.10
