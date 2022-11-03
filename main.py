@@ -1,8 +1,33 @@
 import sys
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QWidget, QAction, QMainWindow, QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QApplication, QWidget, QAction, QMainWindow, QFileDialog, QMessageBox, QVBoxLayout
+from PyQt5.QtChart import QChart, QChartView, QLineSeries, QValueAxis
 import pyqtgraph as pg
 import scipy.io
+import numpy as np
+class ChartView(QChart):
+    def __init__(self,chart):
+        super().__init__(chart)
+        self.chart = chart
+
+        self.start_pos = None
+
+class ChartView(QChart):
+    def __init__(self,chart):
+        super().__init__(chart)
+        self.chart = chart
+        self.start_pos = None
+
+    def wheelEvent(self, event):
+        zoom_factor = 1.0
+        scale_factor = 1.10
+
+        if event.angleDelta().y() >= 120 and zoom_factor < 3.0:
+            zoom_factor*=1.25
+            self.chart.zoom(scale_factor)
+        elif event.angleDelta().y() <=-120 and zoom_factor > 0.5:
+            zoom_factor *=0.8
+            self.chart.zoom(1/ scale_factor)
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -14,9 +39,11 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Initialize the window and display its contents to the screen.
         """
-        self.setGeometry(100, 100, 400, 300)
+        self.x = np.random.normal(size=1000)
+        self.setGeometry(200, 100, 800, 600)
         self.setWindowTitle('Empty Window in PyQt')
         self.createMenu()
+        self.setupPlotter(self.x)
         self.show()
 
     def createMenu(self):
@@ -50,19 +77,30 @@ class MainWindow(QtWidgets.QMainWindow):
         the text edit field.
         """
         file_name, _ = QFileDialog.getOpenFileName(self, "Open File",
-                                                   "", "HTML Files (*.html);;Text Files (*.txt)")
+                                                   "", "Mat Files (*.mat);;HTML Files (*.html);;Text Files (*.txt)")
         if file_name:
-         with open(file_name, 'r') as f:
-          notepad_text = f.read()
-          self.text_field.setText(notepad_text)
+         if file_name[-4:] == '.mat':
+            sig = scipy.io.loadmat(file_name)
+            x = sig['Data1_V1i']
+            self.setupPlotter(x)
+         else:
+             with open(file_name, 'r') as f:
+                 sig = f.read()
+                 self.text_field.setText(sig)
         else:
           QMessageBox.information(self, "Error",
           "Unable to open file.", QMessageBox.Ok)
 
-    def setupPlotter(self):
-        self.plot_tot = pg.PlotWidget()
-
-
+    def setupPlotter(self,data):
+        t = range(0,np.size(data))
+        chart = QChart()
+        chart.setAnimationOptions(QChart.SeriesAnimations)
+        line_series = QLineSeries()
+        for value in range(0, np.size(data)):
+            line_series.append(t[value],data[value])
+        chart.addSeries(line_series)
+        self.chart_view = QChartView(chart)
+        self.setCentralWidget(self.chart_view)
 
 # Run program
 
