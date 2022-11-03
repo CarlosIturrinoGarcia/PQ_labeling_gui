@@ -54,7 +54,7 @@ class MainWindow(QtWidgets.QMainWindow):
         the text edit field.
         """
         file_name, _ = QFileDialog.getOpenFileName(self, "Open File",
-                                                   "", "HTML Files (*.html);;Text Files (*.txt)")
+                                                   "", "HTML Files (*.html);;Text Files (*.txt);;Mat Files (*.mat)")
         if file_name:
          with open(file_name, 'r') as f:
           sig = f.read()
