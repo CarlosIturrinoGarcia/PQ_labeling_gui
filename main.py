@@ -24,6 +24,11 @@ class ChartView(QChart):
             zoom_factor *= 0.8
             self.chart.zoom(1 / scale_factor)
 
+    def mousePressEvent(self,event):
+        if event.button()== Qt.LeftButton:
+            self.setDragMode(QGraphicsView.scrollHandDrag)
+            self.start_pos = event.pos()
+
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
