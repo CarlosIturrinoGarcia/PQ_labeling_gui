@@ -1,13 +1,14 @@
 import sys
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QWidget, QAction, QMainWindow, QFileDialog, QMessageBox, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QWidget, QAction, QMainWindow, QFileDialog, QMessageBox, QVBoxLayout, QGraphicsView
 from PyQt5.QtChart import QChart, QChartView, QLineSeries, QValueAxis
+from PyQt5.QtCore import Qt
 import pyqtgraph as pg
 import scipy.io
 import numpy as np
 
 
-class ChartView(QChart):
+class ChartView(QChartView):
     def __init__(self, chart):
         super().__init__(chart)
         self.chart = chart
@@ -26,7 +27,7 @@ class ChartView(QChart):
 
     def mousePressEvent(self,event):
         if event.button()== Qt.LeftButton:
-            self.setDragMode(QGraphicsView.scrollHandDrag)
+            self.setDragMode(QGraphicsView.ScrollHandDrag)
             self.start_pos = event.pos()
 
     def mouseMoveEvent(self,event):
@@ -37,6 +38,7 @@ class ChartView(QChart):
 
     def mouseReleaseEvent(self, event):
         self.setDragMode(QGraphicsView.NoDrag)
+
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -101,13 +103,13 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def setupPlotter(self, data):
         t = range(0, np.size(data))
-        chart = QChart()
-        chart.setAnimationOptions(QChart.SeriesAnimations)
+        self.chart = QChart()
+        self.chart.setAnimationOptions(QChart.SeriesAnimations)
         line_series = QLineSeries()
         for value in range(0, np.size(data)):
             line_series.append(t[value], data[value])
-        chart.addSeries(line_series)
-        self.chart_view = QChartView(chart)
+        self.chart.addSeries(line_series)
+        self.chart_view = ChartView(self.chart)
         self.setCentralWidget(self.chart_view)
 
 
