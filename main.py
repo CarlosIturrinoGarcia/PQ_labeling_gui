@@ -35,6 +35,9 @@ class ChartView(QChart):
             self.chart.scroll(delta.x(), -delta.y())
             self.start_pos = event.pos()
 
+    def mouseReleaseEvent(self, event):
+        self.setDragMode(QGraphicsView.NoDrag)
+
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()  # create default constructor for QWidget
