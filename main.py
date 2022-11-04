@@ -39,6 +39,20 @@ class ChartView(QChartView):
     def mouseReleaseEvent(self, event):
         self.setDragMode(QGraphicsView.NoDrag)
 
+    def mousePressEvent(self,event):
+        if (event.button()== Qt.LeftButton):
+            self.setDragMode(QGraphicsView.ScrollHandDrag)
+            self.start_pos = event.pos()
+
+    def mouseMoveEvent(self,event):
+        if (event.buttons()== Qt.LeftButton):
+            delta = self.start_pos - event.pos()
+            self.chart.scroll(delta.x(), -delta.y())
+            self.start_pos = event.pos()
+
+    def mouseReleaseEvent(self, event):
+        self.setDragMode(QGraphicsView.NoDrag)
+
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
