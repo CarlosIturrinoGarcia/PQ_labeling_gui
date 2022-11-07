@@ -7,55 +7,10 @@ import pyqtgraph as pg
 import scipy.io
 import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
+from matplotlib.figure import Figure
 
 
-class ChartView(QChartView):
-    def __init__(self, chart):
-        super().__init__(chart)
-        self.chart = chart
-        self.start_pos = None
-
-    def wheelEvent(self, event):
-        zoom_factor = 1.0
-        scale_factor = 1.10
-
-        if event.angleDelta().y() >= 120 and zoom_factor < 3.0:
-            zoom_factor *= 1.25
-            self.chart.zoom(scale_factor)
-        elif event.angleDelta().y() <= -120 and zoom_factor > 0.5:
-            zoom_factor *= 0.8
-            self.chart.zoom(1 / scale_factor)
-
-    def mousePressEvent(self,event):
-        if event.button()== Qt.LeftButton:
-            self.setDragMode(QGraphicsView.ScrollHandDrag)
-            self.start_pos = event.pos()
-
-    def mouseMoveEvent(self,event):
-        if (event.buttons()== Qt.LeftButton):
-            delta = self.start_pos - event.pos()
-            self.chart.scroll(delta.x(), -delta.y())
-            self.start_pos = event.pos()
-
-    def mouseReleaseEvent(self, event):
-        self.setDragMode(QGraphicsView.NoDrag)
-
-    def mousePressEvent(self,event):
-        if (event.button()== Qt.LeftButton):
-            self.setDragMode(QGraphicsView.ScrollHandDrag)
-            self.start_pos = event.pos()
-
-    def mouseMoveEvent(self,event):
-        if (event.buttons()== Qt.LeftButton):
-            delta = self.start_pos - event.pos()
-            self.chart.scroll(delta.x(), -delta.y())
-            self.start_pos = event.pos()
-
-    def mouseReleaseEvent(self, event):
-        self.setDragMode(QGraphicsView.NoDrag)
-
-
-class MainWindow(QtWidgets.QMainWindow):
+class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()  # create default constructor for QWidget
         self.initializeUI()
@@ -118,14 +73,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def setupPlotter(self, data):
         t = range(0, np.size(data))
-        self.chart = QChart()
-        self.chart.setAnimationOptions(QChart.SeriesAnimations)
-        line_series = QLineSeries()
-        for value in range(0, np.size(data)):
-            line_series.append(t[value], data[value])
-        self.chart.addSeries(line_series)
-        self.chart_view = ChartView(self.chart)
-        self.setCentralWidget(self.chart_view)
+        figure = Figure(figsize=(6,5))
+        chart_canvas = FigureCanvasQTAgg(figure)
+        axes = figure.add_subplot(111)
+        axes.plot(data)
+        self.setCentralWidget(chart_canvas)
 
 
 # Run program
