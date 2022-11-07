@@ -19,6 +19,10 @@ class MainWindow(QMainWindow):
         """
         Initialize the window and display its contents to the screen.
         """
+
+        figure = Figure(figsize=(6, 5))
+        self.chart_canvas = FigureCanvasQTAgg(figure)
+
         self.x = np.random.normal(size=1000)
         self.setGeometry(200, 100, 800, 600)
         self.setWindowTitle('Empty Window in PyQt')
@@ -62,7 +66,7 @@ class MainWindow(QMainWindow):
             if file_name[-4:] == '.mat':
                 sig = scipy.io.loadmat(file_name)
                 x = sig['Data1_V1i']
-                self.setupPlotter(x)
+                self.updatePlotter(x)
             else:
                 with open(file_name, 'r') as f:
                     sig = f.read()
@@ -71,15 +75,27 @@ class MainWindow(QMainWindow):
             QMessageBox.information(self, "Error",
                                     "Unable to open file.", QMessageBox.Ok)
 
+
+
     def setupPlotter(self, data):
         t = range(0, np.size(data))
-        figure = Figure(figsize=(6,5))
-        chart_canvas = FigureCanvasQTAgg(figure)
-        axes = figure.add_subplot(111)
-        axes.plot(data)
-        self.addToolBar(NavigationToolbar2QT(chart_canvas,self))
-        self.setCentralWidget(chart_canvas)
+        self.figure = Figure(figsize=(6,5))
+        self.chart_canvas = FigureCanvasQTAgg(self.figure)
+        self.axes = self.figure.add_subplot(111)
+        self.PlotData(data)
 
+    def updatePlotter(self,data):
+        self.figure.clear()
+        self.figure = Figure(figsize=(6, 5))
+        self.chart_canvas = FigureCanvasQTAgg(self.figure)
+        self.axes = self.figure.add_subplot(111)
+        self.PlotData(data)
+
+
+    def PlotData(self,data):
+        self.axes.plot(data)
+        self.tool = self.addToolBar(NavigationToolbar2QT(self.chart_canvas, self))
+        self.setCentralWidget(self.chart_canvas)
 
 # Run program
 
