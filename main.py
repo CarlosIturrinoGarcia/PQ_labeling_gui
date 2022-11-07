@@ -6,6 +6,7 @@ from PyQt5.QtCore import Qt
 import pyqtgraph as pg
 import scipy.io
 import numpy as np
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
 
 
 class ChartView(QChartView):
