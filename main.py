@@ -77,6 +77,7 @@ class MainWindow(QMainWindow):
         chart_canvas = FigureCanvasQTAgg(figure)
         axes = figure.add_subplot(111)
         axes.plot(data)
+        self.addToolBar(NavigationToolbar2QT(chart_canvas,self))
         self.setCentralWidget(chart_canvas)
 
 
