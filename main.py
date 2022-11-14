@@ -7,6 +7,7 @@ from matplotlib.figure import Figure
 from matplotlib.widgets import SpanSelector
 from PyQt5 import QtWidgets
 
+
 class MplCanvas(FigureCanvasQTAgg):
 
     def __init__(self, parent=None, width=500, height=400, dpi=100):
