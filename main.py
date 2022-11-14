@@ -75,6 +75,7 @@ class MainWindow(QMainWindow):
                 sig = scipy.io.loadmat(file_name)
                 self.dataPlot1 = sig['Data1_V1i']
                 self.signal_size = len(self.dataPlot1)
+                self.sc.toolbar.clear()
                 self.setupPlotter(self.dataPlot1)
 
             else:
@@ -91,18 +92,18 @@ class MainWindow(QMainWindow):
         self.dataPlot1 = np.array(self.dataPlot1)
         self.count = []
         self.region_x = []
-        sc = MplCanvas(self, width=500, height=400, dpi=100)
+        self.sc = MplCanvas(self, width=500, height=400, dpi=100)
         if self.dataPlot1.any():
             self.dataPlot1.shape = (self.signal_size,)
             self.dataPlot1 = np.array(self.dataPlot1)
             #sc.axes1.set_title(self.name1[0])
-            sc.axes1.plot(self.dataPlot1)
+            self.sc.axes1.plot(self.dataPlot1)
 
         else:
-            sc.axes1.plot([])
-        self.tool = self.addToolBar(NavigationToolbar2QT(sc, self))
-        self.setCentralWidget(sc)
-        self.span1 = SpanSelector(sc.axes1, self.onselect1, 'horizontal', useblit=True,  rectprops=dict(alpha=0.5, facecolor='blue'))
+            self.sc.axes1.plot([])
+        self.tool = self.addToolBar(NavigationToolbar2QT(self.sc, self))
+        self.setCentralWidget(self.sc)
+        self.span1 = SpanSelector(self.sc.axes1, self.onselect1, 'horizontal', useblit=True,  rectprops=dict(alpha=0.5, facecolor='blue'))
 
     def onselect1(self, xmin, xmax):
         if self.count:
