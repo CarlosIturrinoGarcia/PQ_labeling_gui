@@ -77,8 +77,9 @@ class MainWindow(QMainWindow):
         if file_name:
             if file_name[-4:] == '.mat':
                 sig = scipy.io.loadmat(file_name)
-                x = sig['Data1_V1i']
-                self.updatePlotter(x)
+                self.dataPlot1 = sig['Data1_V1i']
+                self.signal_size = len(self.dataPlot1)
+                self.setupPlotter(self.dataPlot1)
             else:
                 with open(file_name, 'r') as f:
                     sig = f.read()
@@ -93,12 +94,11 @@ class MainWindow(QMainWindow):
         self.dataPlot1 = np.array(self.dataPlot1)
         self.count = []
         self.region_x = []
-        # print(self.dataPlot1)
         sc = MplCanvas(self, width=500, height=400, dpi=100)
         if self.dataPlot1.any():
-            self.dataPlot1.shape = (self.signal_size - 2,)
+            self.dataPlot1.shape = (self.signal_size,)
             self.dataPlot1 = np.array(self.dataPlot1)
-            sc.axes1.set_title(self.name1[0])
+            #sc.axes1.set_title(self.name1[0])
             sc.axes1.plot(self.dataPlot1, 'r')
         else:
             sc.axes1.plot([], 'r')
@@ -120,8 +120,6 @@ class MainWindow(QMainWindow):
                remainder = leng % self.windowSize
                is_divisible = remainder == 0
            self.region_x1 = np.append(self.region_x1, self.dataPlot1[int(xmin):(int(xmax)-c)])
-           self.region_x2 = np.append(self.region_x2, self.dataPlot2[int(xmin):(int(xmax)-c)])
-           self.region_x3 = np.append(self.region_x3, self.dataPlot3[int(xmin):(int(xmax)-c)])
            print(np.shape(self.region_x1))
            print(self.count)
 
@@ -137,8 +135,6 @@ class MainWindow(QMainWindow):
                remainder = leng % self.windowSize
                is_divisible = remainder == 0
            self.region_x1 = self.dataPlot1[int(xmin):(int(xmax)-c)]
-           self.region_x2 = self.dataPlot2[int(xmin):(int(xmax)-c)]
-           self.region_x3 = self.dataPlot3[int(xmin):(int(xmax)-c)]
            print(np.shape(self.region_x1))
            print(self.count)
         print(self.region_x1)
