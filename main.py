@@ -8,7 +8,15 @@ import scipy.io
 import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
+from matplotlib.widgets  import RectangleSelector
 
+
+class MplCanvas(FigureCanvasQTAgg):
+
+    def __init__(self, parent=None, width=500, height=400, dpi=100):
+        fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes1 = fig.add_subplot(311)
+        super(MplCanvas, self).__init__(fig)
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -93,9 +101,10 @@ class MainWindow(QMainWindow):
 
 
     def PlotData(self,data):
-        self.axes.plot(data)
+        self.plt = self.axes.plot(data)
         self.tool = self.addToolBar(NavigationToolbar2QT(self.chart_canvas, self))
         self.setCentralWidget(self.chart_canvas)
+
 
 # Run program
 
