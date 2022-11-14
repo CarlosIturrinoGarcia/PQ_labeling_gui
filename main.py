@@ -9,13 +9,13 @@ import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
 from matplotlib.widgets  import RectangleSelector
-
+from matplotlib.widgets import SpanSelector
 
 class MplCanvas(FigureCanvasQTAgg):
 
     def __init__(self, parent=None, width=500, height=400, dpi=100):
         fig = Figure(figsize=(width, height), dpi=dpi)
-        self.axes1 = fig.add_subplot(311)
+        self.axes1 = fig.add_subplot(111)
         super(MplCanvas, self).__init__(fig)
 
 class MainWindow(QMainWindow):
@@ -90,22 +90,70 @@ class MainWindow(QMainWindow):
 
 
     def setupPlotter(self, data):
-        t = range(0, np.size(data))
-        self.figure = Figure(figsize=(6,5))
-        self.chart_canvas = FigureCanvasQTAgg(self.figure)
-        self.axes = self.figure.add_subplot(111)
-        self.PlotData(data)
+        self.dataPlot1 = np.array(self.dataPlot1)
+        self.count = []
+        self.region_x = []
+        # print(self.dataPlot1)
+        sc = MplCanvas(self, width=500, height=400, dpi=100)
+        if self.dataPlot1.any():
+            self.dataPlot1.shape = (self.signal_size - 2,)
+            self.dataPlot1 = np.array(self.dataPlot1)
+            sc.axes1.set_title(self.name1[0])
+            sc.axes1.plot(self.dataPlot1, 'r')
+        else:
+            sc.axes1.plot([], 'r')
+        self.setCentralWidget(sc)
+        self.span1 = SpanSelector(sc.axes1, self.onselect1, 'horizontal', useblit=True,  rectprops=dict(alpha=0.5, facecolor='blue'))
+
+    def onselect1(self, xmin, xmax):
+        if self.count:
+           self.count = self.count+1
+           leng = len(range(int(xmin),int(xmax)))
+           if leng < self.windowSize:
+               print("Non Sufficient Data Points")
+           remainder = leng % self.windowSize
+           is_divisible = remainder == 0
+           c = 0
+           while (not is_divisible):
+               c = c + 1
+               leng = leng - 1
+               remainder = leng % self.windowSize
+               is_divisible = remainder == 0
+           self.region_x1 = np.append(self.region_x1, self.dataPlot1[int(xmin):(int(xmax)-c)])
+           self.region_x2 = np.append(self.region_x2, self.dataPlot2[int(xmin):(int(xmax)-c)])
+           self.region_x3 = np.append(self.region_x3, self.dataPlot3[int(xmin):(int(xmax)-c)])
+           print(np.shape(self.region_x1))
+           print(self.count)
+
+        else:
+           self.count = 1
+           leng = len(range(int(xmin), int(xmax)))
+           remainder = leng % self.windowSize
+           is_divisible = remainder == 0
+           c = 0
+           while (not is_divisible):
+               c = c + 1
+               leng = leng - 1
+               remainder = leng % self.windowSize
+               is_divisible = remainder == 0
+           self.region_x1 = self.dataPlot1[int(xmin):(int(xmax)-c)]
+           self.region_x2 = self.dataPlot2[int(xmin):(int(xmax)-c)]
+           self.region_x3 = self.dataPlot3[int(xmin):(int(xmax)-c)]
+           print(np.shape(self.region_x1))
+           print(self.count)
+        print(self.region_x1)
+
 
     def updatePlotter(self,data):
         self.figure.clear()
         self.figure = Figure(figsize=(6, 5))
         self.chart_canvas = FigureCanvasQTAgg(self.figure)
-        self.axes = self.figure.add_subplot(111)
+        self.axes1 = self.figure.add_subplot(111)
         self.PlotData(data)
 
 
     def PlotData(self,data):
-        self.plt = self.axes.plot(data)
+        self.plt = self.axes1.plot(data)
         self.tool = self.addToolBar(NavigationToolbar2QT(self.chart_canvas, self))
         self.setCentralWidget(self.chart_canvas)
 
