@@ -5,7 +5,7 @@ import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
 from matplotlib.widgets import SpanSelector
-from PyQt5 import QtWidgets
+
 
 
 class MplCanvas(FigureCanvasQTAgg):
