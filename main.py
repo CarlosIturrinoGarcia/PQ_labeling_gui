@@ -31,7 +31,6 @@ class MainWindow(QMainWindow):
 
         figure = Figure(figsize=(6, 5))
         self.chart_canvas = FigureCanvasQTAgg(figure)
-
         self.x = np.random.normal(size=1000)
         self.setGeometry(200, 100, 800, 600)
         self.setWindowTitle('Empty Window in PyQt')
