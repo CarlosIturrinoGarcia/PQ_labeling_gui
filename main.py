@@ -5,6 +5,7 @@ import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
 from matplotlib.widgets import SpanSelector
+from PyQt5 import QtWidgets
 
 class MplCanvas(FigureCanvasQTAgg):
 
@@ -75,6 +76,7 @@ class MainWindow(QMainWindow):
                 self.dataPlot1 = sig['Data1_V1i']
                 self.signal_size = len(self.dataPlot1)
                 self.setupPlotter(self.dataPlot1)
+
             else:
                 with open(file_name, 'r') as f:
                     sig = f.read()
@@ -94,9 +96,11 @@ class MainWindow(QMainWindow):
             self.dataPlot1.shape = (self.signal_size,)
             self.dataPlot1 = np.array(self.dataPlot1)
             #sc.axes1.set_title(self.name1[0])
-            sc.axes1.plot(self.dataPlot1, 'r')
+            sc.axes1.plot(self.dataPlot1)
+
         else:
-            sc.axes1.plot([], 'r')
+            sc.axes1.plot([])
+        self.tool = self.addToolBar(NavigationToolbar2QT(sc, self))
         self.setCentralWidget(sc)
         self.span1 = SpanSelector(sc.axes1, self.onselect1, 'horizontal', useblit=True,  rectprops=dict(alpha=0.5, facecolor='blue'))
 
@@ -134,19 +138,6 @@ class MainWindow(QMainWindow):
            print(self.count)
         print(self.region_x1)
 
-
-    def updatePlotter(self,data):
-        self.figure.clear()
-        self.figure = Figure(figsize=(6, 5))
-        self.chart_canvas = FigureCanvasQTAgg(self.figure)
-        self.axes1 = self.figure.add_subplot(111)
-        self.PlotData(data)
-
-
-    def PlotData(self,data):
-        self.plt = self.axes1.plot(data)
-        self.tool = self.addToolBar(NavigationToolbar2QT(self.chart_canvas, self))
-        self.setCentralWidget(self.chart_canvas)
 
 
 # Run program
