@@ -20,7 +20,11 @@ class MplCanvas(FigureCanvasQTAgg):
 
 class MainWindow(QMainWindow):
     def __init__(self):
-        super().__init__()  # create default constructor for QWidget
+        super(MainWindow, self).__init__() # create default constructor for QWidget
+        self.setGeometry(50, 50, 1500, 700)
+        self.setWindowTitle("Smart Energy Lab")
+        self.dataPlot1 = []
+        self.windowSize = 1922
         self.initializeUI()
 
     def initializeUI(self):
