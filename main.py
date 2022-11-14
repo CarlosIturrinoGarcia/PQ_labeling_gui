@@ -1,14 +1,9 @@
 import sys
-from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QAction, QMainWindow, QFileDialog, QMessageBox, QVBoxLayout, QGraphicsView
-from PyQt5.QtChart import QChart, QChartView, QLineSeries, QValueAxis
-from PyQt5.QtCore import Qt
-import pyqtgraph as pg
 import scipy.io
 import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
-from matplotlib.widgets  import RectangleSelector
 from matplotlib.widgets import SpanSelector
 
 class MplCanvas(FigureCanvasQTAgg):
