@@ -15,6 +15,7 @@ class MplCanvas(FigureCanvasQTAgg):
         self.axes1 = fig.add_subplot(111)
         super(MplCanvas, self).__init__(fig)
 
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__() # create default constructor for QWidget
