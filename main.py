@@ -5,6 +5,7 @@ import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
 from matplotlib.widgets import SpanSelector
+from PyQt5 import QtWidgets
 
 class MplCanvas(FigureCanvasQTAgg):
 
@@ -34,6 +35,7 @@ class MainWindow(QMainWindow):
         self.setGeometry(200, 100, 800, 600)
         self.setWindowTitle('Empty Window in PyQt')
         self.createMenu()
+        self.actions()
         self.setupPlotter(self.x)
         self.show()
 
@@ -62,6 +64,14 @@ class MainWindow(QMainWindow):
         file_menu.addAction(open_act)
         file_menu.addAction(exit_act)
 
+    def actions(self):
+        self.toolBar = self.addToolBar("Extraction")
+
+        self.openAction1 = QtWidgets.QAction("Create Dataset", self)
+        self.openAction1.triggered.connect(self.createDataset)
+        self.toolBar.addAction(self.openAction1)
+    def createDataset(self):
+        print("Connection Successful")
     def openFile(self):
         """
         Open a text or html file and display its contents in
