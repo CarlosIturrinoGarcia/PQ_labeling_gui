@@ -6,7 +6,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationTool
 from matplotlib.figure import Figure
 from matplotlib.widgets import SpanSelector
 from PyQt5 import QtWidgets
-from DatasetCreation import conversion
+from DatasetCreation import conversion, sig2matrix
 
 
 class ClassSelectionWindow(QWidget):
@@ -103,6 +103,8 @@ class MainWindow(QMainWindow):
                 print(self.dataPlot1)
                 self.signal_size = len(self.dataPlot1)
                 self.sc.toolbar.clear()
+                self.sigmatrix = sig2matrix(self.dataPlot1)
+                print(self.sigmatrix)
                 self.setupPlotter(self.dataPlot1)
 
             else:
