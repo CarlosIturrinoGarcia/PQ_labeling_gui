@@ -150,8 +150,10 @@ class MainWindow(QMainWindow):
            print(np.shape(self.region_x1))
            print(self.count)
 
+
         else:
            self.count = 1
+           self.show_new_window()
            leng = len(range(int(xmin), int(xmax)))
            remainder = leng % self.windowSize
            is_divisible = remainder == 0
@@ -166,6 +168,10 @@ class MainWindow(QMainWindow):
            print(self.count)
         print(self.region_x1)
 
+
+    def show_new_window(self):
+        self.w = ClassSelectionWindow()
+        self.w.show()
 
 # Run program
 
