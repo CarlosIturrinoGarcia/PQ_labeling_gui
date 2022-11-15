@@ -5,6 +5,7 @@ import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
 from matplotlib.widgets import SpanSelector
+from PyQt5 import QtWidgets
 
 class MplCanvas(FigureCanvasQTAgg):
 
@@ -61,6 +62,10 @@ class MainWindow(QMainWindow):
         tools_menu = menu_bar.addMenu('Tools')
         file_menu.addAction(open_act)
         file_menu.addAction(exit_act)
+
+    def actions(self):
+        self.openAction1 = QtWidgets.QAction("Open Phase1", self)
+        self.openAction1.triggered.connect(self.file_open1)
 
     def openFile(self):
         """
