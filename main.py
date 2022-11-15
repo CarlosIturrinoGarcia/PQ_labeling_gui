@@ -83,6 +83,9 @@ class MainWindow(QMainWindow):
             if file_name[-4:] == '.mat':
                 sig = scipy.io.loadmat(file_name)
                 self.dataPlot1 = sig['Data1_V1i']
+                print(len(self.dataPlot1))
+                self.dataPlot1 = self.dataPlot1[0:len(self.dataPlot1):8]
+                print(self.dataPlot1)
                 self.signal_size = len(self.dataPlot1)
                 self.sc.toolbar.clear()
                 self.setupPlotter(self.dataPlot1)
