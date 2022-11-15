@@ -8,6 +8,7 @@ from matplotlib.widgets import SpanSelector
 from PyQt5 import QtWidgets
 from DatasetCreation import conversion
 
+
 class MplCanvas(FigureCanvasQTAgg):
 
     def __init__(self, parent=None, width=500, height=400, dpi=100):
