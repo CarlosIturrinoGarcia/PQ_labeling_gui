@@ -1,4 +1,6 @@
 import numpy as np
 
 
-def
+def conversion(region):
+    print(np.shape(region))
+    print(region)
