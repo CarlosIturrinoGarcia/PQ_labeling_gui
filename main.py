@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QAction, QMainWindow, QFileDialog, QMessageBox, QDialog
+from PyQt5.QtWidgets import QApplication, QAction, QMainWindow, QFileDialog, QMessageBox, QDialog, QWidget, QVBoxLayout, QLabel
 import scipy.io
 import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
@@ -8,6 +8,18 @@ from matplotlib.widgets import SpanSelector
 from PyQt5 import QtWidgets
 from DatasetCreation import conversion
 
+
+class ClassSelectionWindow(QWidget):
+    """
+    This "window" is a QWidget. If it has no parent, it
+    will appear as a free-floating window as we want.
+    """
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout()
+        self.label = QLabel("Another Window")
+        layout.addWidget(self.label)
+        self.setLayout(layout)
 
 class MplCanvas(FigureCanvasQTAgg):
 
@@ -153,14 +165,7 @@ class MainWindow(QMainWindow):
            print(np.shape(self.region_x1))
            print(self.count)
         print(self.region_x1)
-        self.button_clicked()
 
-    def button_clicked(self):
-        print("click")
-
-        dlg = QDialog(self)
-        dlg.setWindowTitle("HELLO!")
-        dlg.exec()
 
 # Run program
 
