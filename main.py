@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QAction, QMainWindow, QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QApplication, QAction, QMainWindow, QFileDialog, QMessageBox, QDialog
 import scipy.io
 import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
@@ -153,8 +153,14 @@ class MainWindow(QMainWindow):
            print(np.shape(self.region_x1))
            print(self.count)
         print(self.region_x1)
+        self.button_clicked()
 
+    def button_clicked(self):
+        print("click")
 
+        dlg = QDialog(self)
+        dlg.setWindowTitle("HELLO!")
+        dlg.exec()
 
 # Run program
 
