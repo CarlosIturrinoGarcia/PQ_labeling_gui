@@ -6,7 +6,9 @@ def sig2matrix(sig):
     """
     siglength = len(sig)
     matcolumnsize = round(siglength/18)
-    return matcolumnsize
+    num_classes = 6
+    matrix = np.zeros((num_classes,matcolumnsize))
+    return matrix
 
 def conversion(region):
     """"
