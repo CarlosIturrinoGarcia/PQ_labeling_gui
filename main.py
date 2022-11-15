@@ -35,6 +35,7 @@ class MainWindow(QMainWindow):
         self.setGeometry(200, 100, 800, 600)
         self.setWindowTitle('Empty Window in PyQt')
         self.createMenu()
+        self.actions()
         self.setupPlotter(self.x)
         self.show()
 
@@ -64,9 +65,13 @@ class MainWindow(QMainWindow):
         file_menu.addAction(exit_act)
 
     def actions(self):
-        self.openAction1 = QtWidgets.QAction("Open Phase1", self)
-        self.openAction1.triggered.connect(self.file_open1)
+        self.toolBar = self.addToolBar("Extraction")
 
+        self.openAction1 = QtWidgets.QAction("Create Dataset", self)
+        self.openAction1.triggered.connect(self.createDataset)
+        self.toolBar.addAction(self.openAction1)
+    def createDataset(self):
+        print("Connection Successful")
     def openFile(self):
         """
         Open a text or html file and display its contents in
