@@ -6,6 +6,8 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationTool
 from matplotlib.figure import Figure
 from matplotlib.widgets import SpanSelector
 from PyQt5 import QtWidgets
+from DatasetCreation import conversion
+
 
 class MplCanvas(FigureCanvasQTAgg):
 
@@ -71,6 +73,7 @@ class MainWindow(QMainWindow):
         self.openAction1.triggered.connect(self.createDataset)
         self.toolBar.addAction(self.openAction1)
     def createDataset(self):
+        conversion(self.region_x1)
         print("Connection Successful")
     def openFile(self):
         """
