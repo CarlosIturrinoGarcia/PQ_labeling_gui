@@ -21,6 +21,7 @@ class ClassSelectionWindow(QWidget):
         layout.addWidget(self.label)
         self.setLayout(layout)
 
+
 class MplCanvas(FigureCanvasQTAgg):
 
     def __init__(self, parent=None, width=500, height=400, dpi=100):
@@ -174,7 +175,15 @@ class MainWindow(QMainWindow):
     def show_new_window(self):
         self.w = ClassSelectionWindow()
         self.checkbox = QtWidgets.QCheckBox(self.w)
+        self.checkbox.stateChanged.connect(self.check_sag)
         self.w.show()
+
+    def check_sag(self,checked):
+        if checked:
+            self.langs['c'] = 1
+        else:
+            self.langs['c'] = 0
+        self.show()
 
 # Run program
 
