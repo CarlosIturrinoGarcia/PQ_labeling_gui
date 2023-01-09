@@ -16,8 +16,8 @@ class ClassSelectionWindow(QWidget):
     """
     def __init__(self):
         super().__init__()
+        self.setGeometry(200, 200, 250, 140)
         layout = QVBoxLayout()
-        layout.addWidget(self.label)
         self.setLayout(layout)
 
 
@@ -173,13 +173,16 @@ class MainWindow(QMainWindow):
 
 
     def show_new_window(self):
+        ''' Create New Window with check box for labeling
+            the selected region with the proper class'''
         self.w = ClassSelectionWindow()
-        self.checkbox = QtWidgets.QCheckBox(self.w)
-        self.checkbox.stateChanged.connect(self.check_sag)
-        self.checkbox.setText('Sag')
+        # Checkbox Sag
+        self.checkbox_sag = QtWidgets.QCheckBox(self.w)
+        self.checkbox_sag .stateChanged.connect(self.check_sag)
+        self.checkbox_sag .setText('Sag')
         self.w.show()
 
-    def check_sag(self,checked):
+    def check_sag(self, checked):
         if checked:
             self.langs['sag'] = 1
         else:
