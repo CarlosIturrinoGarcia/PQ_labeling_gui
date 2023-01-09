@@ -37,7 +37,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Smart Energy Lab")
         self.dataPlot1 = []
         self.windowSize = 1922
-        self.langs = {'c': 0, 'cpp': 0, 'java': 0, 'python': 0}
+        self.langs = {'sag': 0, 'swell': 0, 'harmonics': 0, 'transient': 0, 'notch': 0, 'interruption': 0}
         self.initializeUI()
 
     def initializeUI(self):
@@ -177,13 +177,14 @@ class MainWindow(QMainWindow):
         self.w = ClassSelectionWindow()
         self.checkbox = QtWidgets.QCheckBox(self.w)
         self.checkbox.stateChanged.connect(self.check_sag)
+        self.checkbox.setText('Sag')
         self.w.show()
 
     def check_sag(self,checked):
         if checked:
-            self.langs['c'] = 1
+            self.langs['sag'] = 1
         else:
-            self.langs['c'] = 0
+            self.langs['sag'] = 0
         self.show()
 
 # Run program
