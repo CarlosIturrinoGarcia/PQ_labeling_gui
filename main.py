@@ -180,6 +180,11 @@ class MainWindow(QMainWindow):
         self.checkbox_sag = QtWidgets.QCheckBox(self.w)
         self.checkbox_sag .stateChanged.connect(self.check_sag)
         self.checkbox_sag .setText('Sag')
+
+        # Checkbox Swell
+        self.checkbox_swell = QtWidgets.QCheckBox(self.w)
+        self.checkbox_swell .stateChanged.connect(self.check_swell)
+        self.checkbox_swell .setText('Swell')
         self.w.show()
 
     def check_sag(self, checked):
@@ -187,6 +192,13 @@ class MainWindow(QMainWindow):
             self.langs['sag'] = 1
         else:
             self.langs['sag'] = 0
+        self.show()
+
+    def check_swell(self, checked):
+        if checked:
+            self.langs['swell'] = 1
+        else:
+            self.langs['swell'] = 0
         self.show()
 
 # Run program
