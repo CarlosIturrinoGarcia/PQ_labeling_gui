@@ -173,8 +173,12 @@ class MainWindow(QMainWindow):
 
 
     def show_new_window(self):
-        ''' Create New Window with check box for labeling
-            the selected region with the proper class'''
+        """
+        Create New Window with check box for labeling
+        the selected region with the proper class
+        """
+
+
         self.w = ClassSelectionWindow()
         # Checkbox Sag
         self.checkbox_sag = QtWidgets.QCheckBox(self.w)
@@ -255,6 +259,7 @@ class MainWindow(QMainWindow):
         else:
             self.langs['interruption'] = 0
         self.show()
+
 
 # Run program
 
