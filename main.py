@@ -5,7 +5,7 @@ import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
 from matplotlib.widgets import SpanSelector
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from DatasetCreation import conversion, sig2matrix
 
 
@@ -178,13 +178,40 @@ class MainWindow(QMainWindow):
         self.w = ClassSelectionWindow()
         # Checkbox Sag
         self.checkbox_sag = QtWidgets.QCheckBox(self.w)
+        self.checkbox_sag.setGeometry(QtCore.QRect(50, 20, 81, 20))
         self.checkbox_sag .stateChanged.connect(self.check_sag)
         self.checkbox_sag .setText('Sag')
 
         # Checkbox Swell
         self.checkbox_swell = QtWidgets.QCheckBox(self.w)
+        self.checkbox_swell.setGeometry(QtCore.QRect(50, 40, 81, 20))
         self.checkbox_swell .stateChanged.connect(self.check_swell)
         self.checkbox_swell .setText('Swell')
+
+        # Checkbox Harmonics
+        self.checkbox_harm = QtWidgets.QCheckBox(self.w)
+        self.checkbox_harm.setGeometry(QtCore.QRect(50, 60, 81, 20))
+        self.checkbox_harm .stateChanged.connect(self.check_harm)
+        self.checkbox_harm .setText('Harmonics')
+
+        # Checkbox Transient
+        self.checkbox_trans = QtWidgets.QCheckBox(self.w)
+        self.checkbox_trans.setGeometry(QtCore.QRect(50, 80, 81, 20))
+        self.checkbox_trans .stateChanged.connect(self.check_trans)
+        self.checkbox_trans .setText('Transient')
+
+        # Checkbox Notch
+        self.checkbox_notch = QtWidgets.QCheckBox(self.w)
+        self.checkbox_notch.setGeometry(QtCore.QRect(50, 100, 81, 20))
+        self.checkbox_notch .stateChanged.connect(self.check_notch)
+        self.checkbox_notch .setText('Notch')
+
+        # Checkbox Interruption
+        self.checkbox_int = QtWidgets.QCheckBox(self.w)
+        self.checkbox_int.setGeometry(QtCore.QRect(50, 120, 81, 20))
+        self.checkbox_int .stateChanged.connect(self.check_int)
+        self.checkbox_int .setText('Interruption')
+
         self.w.show()
 
     def check_sag(self, checked):
@@ -199,6 +226,34 @@ class MainWindow(QMainWindow):
             self.langs['swell'] = 1
         else:
             self.langs['swell'] = 0
+        self.show()
+
+    def check_harm(self, checked):
+        if checked:
+            self.langs['harmonics'] = 1
+        else:
+            self.langs['harmonics'] = 0
+        self.show()
+
+    def check_trans(self, checked):
+        if checked:
+            self.langs['transient'] = 1
+        else:
+            self.langs['transient'] = 0
+        self.show()
+
+    def check_notch(self, checked):
+        if checked:
+            self.langs['notch'] = 1
+        else:
+            self.langs['notch'] = 0
+        self.show()
+
+    def check_int(self, checked):
+        if checked:
+            self.langs['interruption'] = 1
+        else:
+            self.langs['interruption'] = 0
         self.show()
 
 # Run program
