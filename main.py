@@ -37,6 +37,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Smart Energy Lab")
         self.dataPlot1 = []
         self.windowSize = 1922
+        self.langs = {'c': 0, 'cpp': 0, 'java': 0, 'python': 0}
         self.initializeUI()
 
     def initializeUI(self):
