@@ -173,6 +173,7 @@ class MainWindow(QMainWindow):
 
     def show_new_window(self):
         self.w = ClassSelectionWindow()
+        self.checkbox = QtWidgets.QCheckBox(self.w)
         self.w.show()
 
 # Run program
