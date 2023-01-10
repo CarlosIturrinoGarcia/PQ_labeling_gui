@@ -14,5 +14,6 @@ def conversion(region):
     """"
     Create the index in the signal matrix
     """
+
     print(np.shape(region))
     print(region)
